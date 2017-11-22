@@ -38,7 +38,7 @@ spring:
 #      #uri: mongodb://carbonmiao:111111@localhost:27017/carbonmiao?authSource=carbonmiao&authMechanism=SCRAM-SHA-1 # Mongo database URI. When set, host and port are ignored.
 #  devtools:
 #    restart:
-#      additional-paths:
+#      additional-paths:1
 
 
 
