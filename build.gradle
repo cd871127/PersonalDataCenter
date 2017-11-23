@@ -26,29 +26,41 @@ repositories {
 }
 
 ext {
+    //libs version
     SPRING_BOOT_VERSION = "1.5.8.RELEASE"
     LOGBACK_VERSION = "1.2.3"
+    MYSQL_DRIVER_VERSION = '6.0.6'
+    MYBATIS_VERSION = '1.3.1'
+    HIKARICP_VERSION = '2.7.3'
+    SLF4J_VERSION = '1.7.25'
+    JUNIT_VERSION = '4.12'
 }
 
 dependencies {
+
     //spring
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: SPRING_BOOT_VERSION
     compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: SPRING_BOOT_VERSION
 
     //mybatis
-    compile group: 'org.mybatis', name: 'mybatis', version: '3.4.5'
-    compile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: '1.3.1'
+    compile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: MYBATIS_VERSION
+    compile group: 'mysql', name: 'mysql-connector-java', version: MYSQL_DRIVER_VERSION
 
+    //connection pool
+    compile group: 'com.zaxxer', name: 'HikariCP', version: HIKARICP_VERSION
 
-
-    //日志
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    //log
+    compile group: 'org.slf4j', name: 'slf4j-api', version: SLF4J_VERSION
     compile group: 'ch.qos.logback', name: 'logback-core', version: LOGBACK_VERSION
 
-    //测试
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: LOGBACK_VERSION
 
+    //sha1、base64
+    compile group: 'commons-codec', name: 'commons-codec', version: '1.11'
+
+
+    //test
+    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: LOGBACK_VERSION
+    testCompile group: 'junit', name: 'junit', version: JUNIT_VERSION
 }
 
 jar {

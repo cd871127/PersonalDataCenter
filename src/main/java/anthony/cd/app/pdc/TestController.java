@@ -1,26 +1,28 @@
 package anthony.cd.app.pdc;
 
+import anthony.cd.app.pdc.common.util.encrypt.RSAEncrypt;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.ServletRequest;
+import javax.annotation.Resource;
+import java.security.KeyPair;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/test")
 public class TestController {
 
-    @RequestMapping("test")
-    public String testController(ServletRequest request) {
-        System.out.println(124367);
+    private KeyPair keyPair = null;
 
-        return "1231";
-    }
+    @Resource
+    private RSAEncrypt rsaEncrypt;
 
-    @RequestMapping("test1")
-    public String testController2() {
-        System.out.println(1243678);
-
-        return "1234";
+    @RequestMapping(value = "publickey", method = GET)
+    byte[] getPublicKey() {
+        if (keyPair == null)
+            keyPair = rsaEncrypt.getKeyPair();
+        return keyPair.getPublic().getEncoded();
     }
 
 }
