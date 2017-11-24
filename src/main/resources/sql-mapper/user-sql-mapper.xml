@@ -5,13 +5,13 @@
 
     <select id="getUserInfoByUserName" parameterType="java.lang.String" resultType="UserInfoDTO">
         SELECT
-            user_name userName,
-            nick_name nickName,
-            pass_word passWord,
-            user_type userType,
-            tel_phone telPhone,
-            e_mail    eMail,
-            id_card   idCard
+        user_name userName,
+        nick_name nickName,
+        pass_word passWord,
+        user_type userType,
+        tel_phone telPhone,
+        e_mail eMail,
+        id_card idCard
         FROM USER_INFO_TBL
         WHERE user_name = #{userName}
     </select>

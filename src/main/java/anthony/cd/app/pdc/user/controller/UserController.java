@@ -2,7 +2,6 @@ package anthony.cd.app.pdc.user.controller;
 
 import anthony.cd.app.pdc.user.dto.UserInfoDTO;
 import anthony.cd.app.pdc.user.mapper.UserMapper;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

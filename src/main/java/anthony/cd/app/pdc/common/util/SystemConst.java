@@ -8,5 +8,4 @@ public class SystemConst {
     }
 
     public final static Charset CHARSET = Charset.forName("Utf-8");
-
 }

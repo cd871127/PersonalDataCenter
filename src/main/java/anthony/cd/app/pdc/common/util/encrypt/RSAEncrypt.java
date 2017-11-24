@@ -7,7 +7,6 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.security.*;
-import java.security.KeyPair;
 
 @Component
 public class RSAEncrypt implements AsymmetricEncryption {
