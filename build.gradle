@@ -13,8 +13,6 @@ buildscript {
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE"
-//        classpath "org.springframework.boot:spring-boot-devtools:1.5.8.RELEASE"
-//        classpath 'org.springframework:springloaded:1.2.7.RELEASE'
     }
 }
 
@@ -41,6 +39,11 @@ dependencies {
     //spring
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: SPRING_BOOT_VERSION
     compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: SPRING_BOOT_VERSION
+
+    //redis
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: SPRING_BOOT_VERSION
+
 
     //mybatis
     compile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: MYBATIS_VERSION

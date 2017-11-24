@@ -2,6 +2,7 @@ package anthony.cd.app.pdc.user.controller;
 
 import anthony.cd.app.pdc.user.dto.UserInfoDTO;
 import anthony.cd.app.pdc.user.mapper.UserMapper;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,8 @@ public class UserController {
 
     @Resource
     private UserMapper userMapper;
+
+
 
     @RequestMapping(value = "{userName}", method = POST)
     int addUser(@RequestParam UserInfoDTO userInfoDTO) {
