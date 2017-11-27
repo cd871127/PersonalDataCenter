@@ -8,6 +8,7 @@ CREATE TABLE user_info_tbl
   tel_phone    VARCHAR(11),
   e_mail       VARCHAR(128),
   id_card      VARCHAR(18),
+  status       VARCHAR(2),
   created_date DATETIME,
   updated_date DATETIME
 );

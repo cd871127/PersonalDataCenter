@@ -1,17 +1,19 @@
-package anthony.cd.app.pdc.common.util;
+package anthony.cd.app.pdc.common.util.redis;
 
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
 
 @Component
-public class Serialization {
-    public byte[] serialize(Object object) {
+public class Serializer<T> implements RedisSerializer<T> {
+
+    public byte[] serialize(T t) {
         byte[] bytes = null;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try {
             ObjectOutputStream oos = new ObjectOutputStream(bos);
-            oos.writeObject(object);
+            oos.writeObject(t);
             oos.flush();
             bytes = bos.toByteArray();
             oos.close();
@@ -24,15 +26,16 @@ public class Serialization {
         return bytes;
     }
 
-    public Object unSerialize(byte[] bytes) {
-        Object object = null;
+    @SuppressWarnings("unchecked")
+    public T deserialize(byte[] bytes) {
+        T t = null;
         try {
             ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new ByteArrayInputStream(bytes)));
-            object = ois.readObject();
+            t = (T) ois.readObject();
             ois.close();
         } catch (IOException | ClassNotFoundException ex) {
             ex.printStackTrace();
         }
-        return object;
+        return t;
     }
 }

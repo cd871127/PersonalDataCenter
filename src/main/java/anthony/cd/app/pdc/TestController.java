@@ -1,9 +1,8 @@
 package anthony.cd.app.pdc;
 
-import anthony.cd.app.pdc.common.util.Serialization;
 import anthony.cd.app.pdc.common.util.SystemConst;
 import anthony.cd.app.pdc.common.util.encrypt.RSAEncrypt;
-import org.springframework.data.redis.core.RedisTemplate;
+import anthony.cd.app.pdc.common.util.redis.KeyPairRedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +26,8 @@ public class TestController {
     private StringRedisTemplate stringRedisTemplate;
 
     @Resource
-    private RedisTemplate<String,byte[]> redisTemplate;
+    private KeyPairRedisTemplate redisTemplate;
 
-    @Resource
-    private Serialization serialization;
 
     private byte[] bytes = null;
 
@@ -49,33 +46,31 @@ public class TestController {
         keyPair = rsaEncrypt.getKeyPair();
         bytes = rsaEncrypt.encode(keyPair.getPublic(), bytes);
 
-        redisTemplate.opsForValue().set("test", serialization.serialize(keyPair));
+        redisTemplate.opsForValue().set("test", keyPair);
 //        stringRedisTemplate.opsForValue().set("test", s);
     }
 
     @RequestMapping(value = "redis1", method = GET)
     String redis1() {
-        byte[] a = redisTemplate.opsForValue().get("test");
-        printBytes(a);
-        keyPair = (KeyPair) serialization.unSerialize(a);
+        keyPair = redisTemplate.opsForValue().get("test");
         return new String(rsaEncrypt.decode(keyPair.getPrivate(), bytes), SystemConst.CHARSET);
     }
 
-    @RequestMapping(value = "redis3", method = GET)
-    void redis3() {
-        keyPair = rsaEncrypt.getKeyPair();
-        printBytes(keyPair.getPublic().getEncoded());
-        byte[] a = serialization.serialize(keyPair);
-
-
-        KeyPair keyPair1 = (KeyPair) serialization.unSerialize(a);
-
-        printBytes(keyPair1.getPublic().getEncoded());
-
-        printBytes(keyPair.getPrivate().getEncoded());
-        printBytes(keyPair1.getPrivate().getEncoded());
-
-    }
+//    @RequestMapping(value = "redis3", method = GET)
+//    void redis3() {
+//        keyPair = rsaEncrypt.getKeyPair();
+//        printBytes(keyPair.getPublic().getEncoded());
+//        byte[] a = serialization.serialize(keyPair);
+//
+//
+//        KeyPair keyPair1 = (KeyPair) serialization.unSerialize(a);
+//
+//        printBytes(keyPair1.getPublic().getEncoded());
+//
+//        printBytes(keyPair.getPrivate().getEncoded());
+//        printBytes(keyPair1.getPrivate().getEncoded());
+//
+//    }
 
     private void printBytes(byte[] bytes) {
         for (byte b : bytes)

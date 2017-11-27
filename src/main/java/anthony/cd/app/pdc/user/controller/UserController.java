@@ -1,14 +1,19 @@
 package anthony.cd.app.pdc.user.controller;
 
+import anthony.cd.app.pdc.common.util.SystemConst;
+import anthony.cd.app.pdc.common.util.encrypt.RSAEncrypt;
+import anthony.cd.app.pdc.common.util.redis.KeyPairRedisTemplate;
+import anthony.cd.app.pdc.user.action.UserAction;
 import anthony.cd.app.pdc.user.dto.UserInfoDTO;
 import anthony.cd.app.pdc.user.mapper.UserMapper;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.apache.commons.codec.binary.Base64;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.security.KeyPair;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -17,9 +22,17 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 public class UserController {
 
     @Resource
+    private RSAEncrypt rsaEncrypt;
+
+    @Resource
     private UserMapper userMapper;
 
+    @Resource
+    private KeyPairRedisTemplate keyPairRedisTemplate;
 
+
+    @Resource
+    private UserAction userAction;
 
     @RequestMapping(value = "{userName}", method = POST)
     int addUser(@RequestParam UserInfoDTO userInfoDTO) {
@@ -27,9 +40,17 @@ public class UserController {
     }
 
     @RequestMapping(value = "{userName}", method = GET)
-    UserInfoDTO getUser(@PathVariable String userName) {
-
-        return userMapper.getUserInfoByUserName(userName);
+    @CrossOrigin(origins = "http://localhost:3000", methods = {GET, POST, PUT})
+    Map getUser(@PathVariable String userName, HttpServletRequest request) {
+//        System.out.println(res);
+//        System.out.println(keyId);
+        String keyId = request.getHeader("keyId");
+        String res = request.getHeader("res");
+        KeyPair keyPair = keyPairRedisTemplate.opsForValue().get(keyId);
+        Map m = new HashMap();
+        m.put("res", new String(rsaEncrypt.decode(keyPair.getPrivate(), new Base64().decode(res)), SystemConst.CHARSET));
+        return m;
+//        return userMapper.getUserInfoByUserName(userName);
     }
 
     @RequestMapping(value = "{userName}", method = DELETE)
