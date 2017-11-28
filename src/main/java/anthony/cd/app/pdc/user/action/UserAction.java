@@ -30,11 +30,15 @@ public class UserAction {
     }
 
 
-    public UserInfoDTO getUserInfoDTO(Map<String, String> paraMap) {
-        if (paraMap.get("token") == null)
-            ;
+    public UserInfoDTO getUserInfoDTOByUserName(Map<String, String> paraMap) {
 
 
+
+        return null;
+    }
+
+    public UserInfoDTO userLogin()
+    {
         return null;
     }
 

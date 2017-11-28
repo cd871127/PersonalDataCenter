@@ -1,7 +1,7 @@
 package anthony.cd.app.pdc.common.controller;
 
 import anthony.cd.app.pdc.common.util.encrypt.RSAEncrypt;
-import anthony.cd.app.pdc.common.util.redis.KeyPairRedisTemplate;
+import anthony.cd.app.pdc.common.util.redis.KeyPairSerializer;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,12 +25,11 @@ public class SecurityController {
     @Resource
     private RSAEncrypt rsaEncrypt;
 
-
     @Resource
     private RedisTemplate<String, byte[]> redisTemplate;
 
     @Resource
-    private KeyPairRedisTemplate keyPairRedisTemplate;
+    private KeyPairSerializer keyPairSerializer;
 
 
     /**
@@ -41,7 +40,7 @@ public class SecurityController {
     Map<String, String> initRSAPublicKey() {
         String keyId = UUID.randomUUID().toString();
         KeyPair keyPair = rsaEncrypt.getKeyPair();
-        keyPairRedisTemplate.opsForValue().set(keyId, keyPair, 5, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(keyId, keyPairSerializer.serialize(keyPair), 5, TimeUnit.SECONDS);
         Map<String, String> resMap = new HashMap<>();
         resMap.put("keyId", keyId);
         Base64 base64 = new Base64();

@@ -2,8 +2,8 @@ package anthony.cd.app.pdc;
 
 import anthony.cd.app.pdc.common.util.SystemConst;
 import anthony.cd.app.pdc.common.util.encrypt.RSAEncrypt;
-import anthony.cd.app.pdc.common.util.redis.KeyPairRedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import anthony.cd.app.pdc.common.util.redis.KeyPairSerializer;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,18 +22,18 @@ public class TestController {
     @Resource
     private RSAEncrypt rsaEncrypt;
 
-    @Resource
-    private StringRedisTemplate stringRedisTemplate;
 
     @Resource
-    private KeyPairRedisTemplate redisTemplate;
+    private KeyPairSerializer keyPairSerializer;
+
+    @Resource
+    private RedisTemplate<String, KeyPair> redisTemplate;
 
 
     private byte[] bytes = null;
 
     @RequestMapping(value = "publickey", method = GET)
     byte[] getPublicKey() {
-//        System.out.println("p");
         if (keyPair == null)
             keyPair = rsaEncrypt.getKeyPair();
 
@@ -56,21 +56,6 @@ public class TestController {
         return new String(rsaEncrypt.decode(keyPair.getPrivate(), bytes), SystemConst.CHARSET);
     }
 
-//    @RequestMapping(value = "redis3", method = GET)
-//    void redis3() {
-//        keyPair = rsaEncrypt.getKeyPair();
-//        printBytes(keyPair.getPublic().getEncoded());
-//        byte[] a = serialization.serialize(keyPair);
-//
-//
-//        KeyPair keyPair1 = (KeyPair) serialization.unSerialize(a);
-//
-//        printBytes(keyPair1.getPublic().getEncoded());
-//
-//        printBytes(keyPair.getPrivate().getEncoded());
-//        printBytes(keyPair1.getPrivate().getEncoded());
-//
-//    }
 
     private void printBytes(byte[] bytes) {
         for (byte b : bytes)
