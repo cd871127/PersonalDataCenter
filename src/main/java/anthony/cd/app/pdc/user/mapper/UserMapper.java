@@ -8,6 +8,8 @@ public interface UserMapper {
 
     UserInfoDTO getUserInfoByUserName(String userName);
 
-    int addUserInfo(UserInfoDTO userInfoDTO);
+    boolean addUserInfo(UserInfoDTO userInfoDTO);
+
+    boolean isUserExist(String userName);
 
 }

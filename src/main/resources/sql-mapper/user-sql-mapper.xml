@@ -21,5 +21,11 @@
         VALUES (#{userName}, #{nickName}, #{passWord}, #{telPhone}, #{eMail}, #{idCard})
     </insert>
 
+    <select id="isUserExist" parameterType="java.lang.String" resultType="java.lang.Boolean">
+        SELECT count(*)
+        FROM user_info_tbl
+        WHERE user_name = #{userName}
+    </select>
+
 
 </mapper>

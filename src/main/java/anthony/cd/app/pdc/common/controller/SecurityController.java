@@ -20,7 +20,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 @RestController
 
 @RequestMapping("/security")
-public class SecurityController {
+public class SecurityController extends AbstractController  {
 
     @Resource
     private RSAEncrypt rsaEncrypt;
