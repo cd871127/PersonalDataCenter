@@ -1,6 +1,7 @@
 package anthony.cd.app.pdc.common.filter;
 
 import anthony.cd.app.pdc.common.util.SystemConst;
+import anthony.cd.app.pdc.common.util.TokenManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -19,7 +20,8 @@ public class AuthenticationFilter implements Filter {
 
     @Resource
     private StringRedisTemplate stringRedisTemplate;
-
+    @Resource
+    private TokenManager tokenManager;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -41,6 +43,8 @@ public class AuthenticationFilter implements Filter {
                 //验证token是否存在
                 String userName = stringRedisTemplate.opsForValue().get("TOKEN." + token);
                 if (userName != null) {
+                    //延长token过期时间
+                    tokenManager.resetTokenExpire(token);
                     logger.debug("user:" + userName);
                     logger.debug("uri:" + uri);
                     chain.doFilter(request, response);
