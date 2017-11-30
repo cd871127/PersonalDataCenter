@@ -15,6 +15,8 @@ public class TokenManager {
 
     private Charset CHARSET = Charset.forName("US-ASCII");
 
+    private final String PREFIX = "TOKEN.";
+
     @Resource
     private StringRedisTemplate stringRedisTemplate;
 
@@ -25,11 +27,15 @@ public class TokenManager {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] bytes = md.digest(token.getBytes(CHARSET));
             Base64 base64 = new Base64();
-            token =base64.encodeToString(bytes);
-            stringRedisTemplate.opsForValue().set("TOKEN." + token, userName, 30, TimeUnit.MINUTES);
+            token = base64.encodeToString(bytes);
+            stringRedisTemplate.opsForValue().set(PREFIX + token, userName, 30, TimeUnit.MINUTES);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return token;
+    }
+
+    public boolean resetTokenExpire(String token) {
+        return stringRedisTemplate.expire(PREFIX + token, 30, TimeUnit.MINUTES);
     }
 }
