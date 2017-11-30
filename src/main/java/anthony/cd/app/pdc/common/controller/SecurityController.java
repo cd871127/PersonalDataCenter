@@ -26,7 +26,7 @@ public class SecurityController extends AbstractController  {
     private RSAEncrypt rsaEncrypt;
 
     @Resource
-    private RedisTemplate<String, byte[]> redisTemplate;
+    private RedisTemplate<String, KeyPair> redisTemplate;
 
     @Resource
     private KeyPairSerializer keyPairSerializer;
@@ -40,7 +40,7 @@ public class SecurityController extends AbstractController  {
     Map<String, String> initRSAPublicKey() {
         String keyId = UUID.randomUUID().toString();
         KeyPair keyPair = rsaEncrypt.getKeyPair();
-        redisTemplate.opsForValue().set(keyId, keyPairSerializer.serialize(keyPair), 5, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(keyId, keyPair, 5, TimeUnit.SECONDS);
         Map<String, String> resMap = new HashMap<>();
         resMap.put("keyId", keyId);
         Base64 base64 = new Base64();

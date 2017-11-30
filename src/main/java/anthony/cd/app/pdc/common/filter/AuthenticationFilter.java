@@ -3,7 +3,7 @@ package anthony.cd.app.pdc.common.filter;
 import anthony.cd.app.pdc.common.util.SystemConst;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import javax.annotation.Resource;
 import javax.servlet.*;
@@ -16,8 +16,9 @@ public class AuthenticationFilter implements Filter {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+
     @Resource
-    private RedisTemplate<String, byte[]> redisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
 
 
     @Override
@@ -28,31 +29,33 @@ public class AuthenticationFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-
         String uri = httpServletRequest.getRequestURI();
         String method = httpServletRequest.getMethod();
-        redisTemplate.opsForValue().get("token");
         //注册和登陆页面直接lu撸
-        if (("GET".equals(method) || "POST".equals(method)) && uri.contains("/users/")) {
+        if (("POST".equals(method) && uri.contains("/users/info")) || ("POST".equals(method) && uri.contains("/users/registry"))||
+                ("GET".equals(method) && uri.contains("/security/rsaPublicKey")) ) {
             chain.doFilter(request, response);
-
         } else {
-
             String token = httpServletRequest.getHeader("token");
-            if (token == null) {
+            if (token != null) {
+                //验证token是否存在
+                String userName = stringRedisTemplate.opsForValue().get("TOKEN." + token);
+                if (userName != null) {
+                    logger.debug("user:" + userName);
+                    logger.debug("uri:" + uri);
+                    chain.doFilter(request, response);
+                } else {
+                    logger.debug("invalid token");
+                    RequestDispatcher requestDispatcher = httpServletRequest.getRequestDispatcher("/error/" + SystemConst.RequestResult.INVALID_TOKEN);
+                    requestDispatcher.forward(request, response);
+                }
+            } else {
                 //没有token 返回客户端没有登陆
                 logger.debug("found no token");
                 RequestDispatcher requestDispatcher = httpServletRequest.getRequestDispatcher("/error/" + SystemConst.RequestResult.NO_TOKEN);
                 requestDispatcher.forward(request, response);
-            } else {
-                //todo 验证token
-                logger.debug("token: " + token);
-                redisTemplate.opsForValue().get("token");
-                chain.doFilter(request, response);
-
             }
         }
-
     }
 
     @Override

@@ -1,7 +1,6 @@
 package anthony.cd.app.pdc.common.util;
 
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -26,9 +25,8 @@ public class TokenManager {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] bytes = md.digest(token.getBytes(CHARSET));
             Base64 base64 = new Base64();
-            bytes = base64.encode(bytes);
-            token = new String(bytes, CHARSET);
-            stringRedisTemplate.opsForValue().set("TOKEN."+token,userName,30, TimeUnit.MINUTES);
+            token =base64.encodeToString(bytes);
+            stringRedisTemplate.opsForValue().set("TOKEN." + token, userName, 30, TimeUnit.MINUTES);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

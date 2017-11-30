@@ -13,8 +13,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
+import static anthony.cd.app.pdc.common.util.SystemConst.RequestResult.LOGIN_FAILED;
+import static anthony.cd.app.pdc.common.util.SystemConst.RequestResult.SUCCESS;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
@@ -38,27 +40,32 @@ public class UserController extends AbstractController {
     @Resource
     private UserAction userAction;
 
-    @RequestMapping(value = "{userName}", method = GET)
-    @CrossOrigin(origins = "http://localhost:3000", methods = {GET})
-    UserInfoDTO getUserInfoDTO(HttpServletRequest request) {
-        String token = request.getHeader("token");
-        UserInfoDTO userInfoDTO;
-        if (token != null) {
-            userInfoDTO = userAction.getUserInfoDTOByUserName(null);
+    @RequestMapping(value = "info/{userName}", method = POST)
+    @CrossOrigin(origins = "http://localhost:3000", methods = {POST})
+    ServerResponse login(@PathVariable String userName, @RequestBody Map<String, String> requestMap) {
+        requestMap.put("userName", userName);
+        UserInfoDTO userInfoDTO = userAction.userLogin(requestMap);
+        ServerResponse<UserInfoDTO> serverResponse = new ServerResponse<>();
+        if (userInfoDTO == null) {
+            serverResponse.setResult(LOGIN_FAILED);
         } else {
-            userInfoDTO = userAction.userLogin();
+            //设置TOKEN
+            serverResponse.setToken(tokenManager.generateTokenByTimeAndUserName(userName));
+            serverResponse.setResult(SUCCESS);
+            serverResponse.setData(userInfoDTO);
         }
-        return userInfoDTO;
+        return serverResponse;
     }
 
 
     @RequestMapping(value = "registry", method = POST)
-    ServerResponse addUser(@RequestBody UserInfoDTO userInfoDTO) {
-        SystemConst.RequestResult requestResult = userAction.userRegister(userInfoDTO);
+    @CrossOrigin(origins = "http://localhost:3000", methods = {POST})
+    ServerResponse addUser(@RequestBody UserInfoDTO userInfoDTO, @RequestHeader String keyId) {
+        SystemConst.RequestResult requestResult = userAction.userRegister(userInfoDTO, keyId);
         ServerResponse serverResponse = new ServerResponse(requestResult);
-        if (SystemConst.RequestResult.SUCCESS.equals(requestResult)) {
+        if (SUCCESS.equals(requestResult)) {
             //生成TOKEN
-            String token = tokenManager.generateTokenByTimeAndUserName(userInfoDTO.getUserName());;
+            String token = tokenManager.generateTokenByTimeAndUserName(userInfoDTO.getUserName());
             serverResponse.setToken(token);
         }
         return serverResponse;

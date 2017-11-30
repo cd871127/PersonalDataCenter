@@ -3,22 +3,29 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="anthony.cd.app.pdc.user.mapper.UserMapper">
 
-    <select id="getUserInfoByUserName" parameterType="java.lang.String" resultType="UserInfoDTO">
+    <select id="getUserInfo" parameterType="java.util.Map" resultType="UserInfoDTO">
         SELECT
-            user_name userName,
-            nick_name nickName,
-            pass_word passWord,
-            user_type userType,
-            tel_phone telPhone,
-            e_mail    eMail,
-            id_card   idCard
+        user_name userName,
+        nick_name nickName,
+        pass_word passWord,
+        user_type userType,
+        tel_phone telPhone,
+        e_mail eMail,
+        id_card idCard
         FROM USER_INFO_TBL
-        WHERE user_name = #{userName}
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="userName!=null">
+                and user_name = #{userName}
+            </if>
+            <if test="passWord!=null">
+                and pass_word=PASSWORD(#{passWord})
+            </if>
+        </trim>
     </select>
 
     <insert id="addUserInfo" parameterType="UserInfoDTO">
         INSERT INTO user_info_tbl (user_name, nick_name, pass_word, tel_phone, e_mail, id_card)
-        VALUES (#{userName}, #{nickName}, #{passWord}, #{telPhone}, #{eMail}, #{idCard})
+        VALUES (#{userName}, #{nickName}, PASSWORD(#{passWord}), #{telPhone}, #{eMail}, #{idCard})
     </insert>
 
     <select id="isUserExist" parameterType="java.lang.String" resultType="java.lang.Boolean">
