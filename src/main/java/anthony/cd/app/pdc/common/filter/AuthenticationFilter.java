@@ -34,7 +34,7 @@ public class AuthenticationFilter implements Filter {
         String uri = httpServletRequest.getRequestURI();
         String method = httpServletRequest.getMethod();
         //注册和登陆页面直接lu撸
-        if (("POST".equals(method) && uri.contains("/users/info")) || ("POST".equals(method) && uri.contains("/users/registry")) ||
+        if (("GET".equals(method) && uri.contains("/users/token")) || ("POST".equals(method) && uri.contains("/users/registry")) ||
                 ("GET".equals(method) && uri.contains("/security/rsaPublicKey"))) {
             chain.doFilter(request, response);
         } else {

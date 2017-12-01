@@ -85,6 +85,3 @@ bootRepackage {
 bootRun {
     addResources = true
 }
-
-
-

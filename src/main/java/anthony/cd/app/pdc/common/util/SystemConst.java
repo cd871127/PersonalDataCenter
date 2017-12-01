@@ -12,7 +12,7 @@ public class SystemConst {
     public enum RequestResult {
 
         SUCCESS("000", "操作成功"), NO_TOKEN("001", "用户未登录"), USER_EXISTED("002", "用户名已被注册"), ADD_USER_ERROR("003", "插入用户失败"),
-        INVALID_TOKEN("004", "无效的token"),LOGIN_FAILED("005","用户不存在或密码错误");
+        INVALID_TOKEN("004", "无效的token"),LOGIN_FAILED("005","用户不存在或密码错误"),OPERATION_FAILED("006","操作失败");
 
         private String code;
         private String msg;

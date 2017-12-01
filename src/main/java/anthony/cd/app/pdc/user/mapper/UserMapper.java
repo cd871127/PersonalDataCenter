@@ -8,10 +8,16 @@ import java.util.Map;
 @Repository
 public interface UserMapper {
 
-    UserInfoDTO getUserInfo(Map<String,String> paraMap);
+    UserInfoDTO getUserInfo(Map<String, String> paraMap);
 
     boolean addUserInfo(UserInfoDTO userInfoDTO);
 
     boolean isUserExist(String userName);
+
+    boolean insertUserHisTbl(String userName);
+
+    boolean deleteUserInfoByUserName(String userName);
+
+    boolean updateUserInfo(UserInfoDTO userInfoDTO);
 
 }
