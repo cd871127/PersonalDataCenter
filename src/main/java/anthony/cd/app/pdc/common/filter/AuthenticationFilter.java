@@ -34,8 +34,7 @@ public class AuthenticationFilter implements Filter {
         String uri = httpServletRequest.getRequestURI();
         String method = httpServletRequest.getMethod();
         //注册和登陆页面直接lu撸
-        if (("GET".equals(method) && uri.contains("/users/token")) || ("POST".equals(method) && uri.contains("/users/registry")) ||
-                ("GET".equals(method) && uri.contains("/security/rsaPublicKey"))) {
+        if (exclude(method, uri)) {
             chain.doFilter(request, response);
         } else {
             String token = httpServletRequest.getHeader("token");
@@ -60,6 +59,15 @@ public class AuthenticationFilter implements Filter {
                 requestDispatcher.forward(request, response);
             }
         }
+    }
+
+    private boolean exclude(String method, String uri) {
+        if (("GET".equals(method) && uri.contains("/users/token")) || ("POST".equals(method) && uri.contains("/users/registry")) ||
+                ("GET".equals(method) && uri.contains("/security/rsaPublicKey")))
+            return true;
+        if (uri.contains("/file"))
+            return true;
+        return false;
     }
 
     @Override

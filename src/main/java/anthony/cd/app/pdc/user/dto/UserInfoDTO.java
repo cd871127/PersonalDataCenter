@@ -1,7 +1,9 @@
 package anthony.cd.app.pdc.user.dto;
 
 
-public class UserInfoDTO {
+import java.io.Serializable;
+
+public class UserInfoDTO implements Serializable {
     private String userName;
     private String nickName;
     private String passWord;

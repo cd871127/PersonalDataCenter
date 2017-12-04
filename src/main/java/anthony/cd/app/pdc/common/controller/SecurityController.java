@@ -1,5 +1,7 @@
 package anthony.cd.app.pdc.common.controller;
 
+import anthony.cd.app.pdc.common.util.ServerResponse;
+import anthony.cd.app.pdc.common.util.SystemConst;
 import anthony.cd.app.pdc.common.util.encrypt.RSAEncrypt;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -33,7 +35,8 @@ public class SecurityController extends AbstractController {
      */
     @RequestMapping(value = "rsaPublicKey", method = GET)
     @CrossOrigin(origins = "http://localhost:3000", methods = {GET})
-    Map<String, String> initRSAPublicKey() {
+    ServerResponse<Map<String, String>> initRSAPublicKey() {
+        ServerResponse<Map<String, String>> serverResponse=new ServerResponse<>();
         String keyId = UUID.randomUUID().toString();
         KeyPair keyPair = rsaEncrypt.getKeyPair();
         redisTemplate.opsForValue().set(keyId, keyPair, 5, TimeUnit.SECONDS);
@@ -41,7 +44,9 @@ public class SecurityController extends AbstractController {
         resMap.put("keyId", keyId);
         Base64 base64=new Base64();
         resMap.put("publicKey", base64.encodeToString(keyPair.getPublic().getEncoded()));
-        return resMap;
+        serverResponse.setResult(SystemConst.RequestResult.SUCCESS);
+        serverResponse.setData(resMap);
+        return serverResponse;
     }
 
 }

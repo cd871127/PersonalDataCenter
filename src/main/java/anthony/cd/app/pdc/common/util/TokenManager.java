@@ -1,13 +1,12 @@
 package anthony.cd.app.pdc.common.util;
 
 import anthony.cd.app.pdc.common.util.encrypt.Base64URLSafe;
+import anthony.cd.app.pdc.common.util.hash.MD5;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.nio.charset.Charset;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -25,14 +24,9 @@ public class TokenManager {
 
     public String generateTokenByTimeAndUserName(String userName) {
         String token = String.valueOf(System.currentTimeMillis()) + userName;
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] bytes = md.digest(token.getBytes(CHARSET));
-            token = base64URLSafe.encodeToString(bytes);
-            stringRedisTemplate.opsForValue().set(PREFIX + token, userName, 30, TimeUnit.MINUTES);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
+        byte[] bytes = MD5.byteToMD5Bytes(token.getBytes(CHARSET));
+        token = base64URLSafe.encodeToString(bytes);
+        stringRedisTemplate.opsForValue().set(PREFIX + token, userName, 30, TimeUnit.MINUTES);
         return token;
     }
 

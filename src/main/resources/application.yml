@@ -15,8 +15,8 @@ spring:
     multipart:
       enabled: true
       resolve-lazily: true
-      max-file-size: 128MB
-      max-request-size: 128MB
+      max-file-size: 16384MB
+      max-request-size: 16384MB
   datasource:
       driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://localhost:3306/pdc?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false
