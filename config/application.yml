@@ -1,10 +1,12 @@
 server:
-  port: 18888
+  #port: 18888
   tomcat:
     uri-encoding: utf-8 #以Tomcat为web容器时的字符编码
-
 #spring.devtools.restart.additional-paths=src/main/java
+#
 spring:
+  profiles:
+    active: dev
   http:
     encoding:
       force: true
@@ -19,14 +21,14 @@ spring:
       max-request-size: 16384MB
   datasource:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/pdc?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false
-      username: cdistc
-      password: cd123321
+    #  url: jdbc:mysql://localhost:3306/pdc?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false
+    #  username: cdistc
+     # password: cd123321
       type: com.zaxxer.hikari.HikariDataSource
   redis:
-    database: 0
-    host: 127.0.0.1
-    port: 6379
+  #  database: 0
+  #  host: 127.0.0.1
+  #  port: 6379
     pool:
       max-active: 8
       max-wait: -1
@@ -68,7 +70,7 @@ mybatis:
 #  mybatis.executorType：设置执行模式（SIMPLE, REUSE, BATCH），默认为SIMPLE
 
 
-## Redis 配置
+# Redis 配置
 ## Redis数据库索引（默认为0）
 #spring.redis.database=0
 ### Redis服务器地址
@@ -87,5 +89,4 @@ mybatis:
 #spring.redis.pool.min-idle=0
 ### 连接超时时间（毫秒）
 #spring.redis.timeout=0
-
 

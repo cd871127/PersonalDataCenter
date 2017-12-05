@@ -32,6 +32,7 @@ ext {
     HIKARICP_VERSION = '2.7.3'
     SLF4J_VERSION = '1.7.25'
     JUNIT_VERSION = '4.12'
+    MAIL_VERSION = '1.6.0'
 }
 
 dependencies {
@@ -44,7 +45,6 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis', version: SPRING_BOOT_VERSION
 
-
     //mybatis
     compile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: MYBATIS_VERSION
     compile group: 'mysql', name: 'mysql-connector-java', version: MYSQL_DRIVER_VERSION
@@ -56,10 +56,12 @@ dependencies {
     compile group: 'org.slf4j', name: 'slf4j-api', version: SLF4J_VERSION
     compile group: 'ch.qos.logback', name: 'logback-core', version: LOGBACK_VERSION
 
-
     //sha1、base64
     compile group: 'commons-codec', name: 'commons-codec', version: '1.11'
 
+    //mail
+    compile group: 'javax.mail', name: 'javax.mail-api', version: MAIL_VERSION
+    compile group: 'com.sun.mail', name: 'javax.mail', version: MAIL_VERSION
 
     //test
     testCompile group: 'ch.qos.logback', name: 'logback-classic', version: LOGBACK_VERSION

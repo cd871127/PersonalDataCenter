@@ -39,7 +39,8 @@ public class FileAction {
                 if (null == fileDTO) {
                     String path = SystemConst.FILE_PATH + "/" + sdf.format(new Date(System.currentTimeMillis())) + "/";
                     File dir = new File(path);
-                    if (dir.exists()) {
+
+                    if (!dir.exists()) {
                         if (!dir.mkdir()) {
                             throw new IOException();
                         }
