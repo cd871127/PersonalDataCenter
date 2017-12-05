@@ -86,7 +86,7 @@ public class FileAction {
             return false;
         // 查询fileID是否还存在,如果存在,直接返回,
         paraMap.remove("userName");
-        if (fileMapper.findFile(paraMap) != null)
+        if (!fileMapper.findFileList(paraMap).isEmpty())
             return true;
         // 如果不存在,删除文件后返回
         File file = new File(fileDTO.getServerPath() + fileDTO.getFileName() + fileDTO.getPostfix());

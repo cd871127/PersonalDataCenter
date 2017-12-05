@@ -11,8 +11,10 @@ public interface FileMapper {
 
     int addFiles(List<FileDTO> files);
 
-
     FileDTO findFile(Map<String, String> paraMap);
+
+    List<FileDTO> findFileList(Map<String, String> paraMap);
+
 
     boolean deleteFile(Map<String, String> paraMap);
 }

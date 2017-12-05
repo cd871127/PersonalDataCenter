@@ -24,6 +24,23 @@
                 and user_name = #{userName}
             </if>
         </trim>
+        limit 1
+    </select>
+
+    <select id="findFileList" parameterType="java.util.Map" resultType="FileDTO">
+        SELECT file_id fileId,file_name fileName,postfix,user_name userName,server_path serverPath FROM file_info_tbl
+        WHERE
+        <trim prefixOverrides="and">
+            <if test="fileId!=null">
+                and file_id = #{fileId}
+            </if>
+            <if test="fileName!=null">
+                and file_name = #{fileName}
+            </if>
+            <if test="userName!=null">
+                and user_name = #{userName}
+            </if>
+        </trim>
     </select>
 
     <delete id="deleteFile" parameterType="java.util.Map">
