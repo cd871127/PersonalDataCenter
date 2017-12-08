@@ -1,6 +1,6 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
     <!-- 其他配置省略-->
-    <!--<property name="APP_Name" value="myAppName" />-->
+    <!--<property name="log_dir" value="log"/>-->
     <!--<timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss"/>-->
     <!--<contextName>pdc</contextName>-->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -9,6 +9,15 @@
             <pattern>%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
+
+    <!--<appender name="aaa" class="ch.qos.logback.core.RollingFileAppender">-->
+        <!--<file>${log_dir}/testFile.log</file>-->
+        <!--<append>true</append>-->
+        <!--&lt;!&ndash; encoder 默认配置为PatternLayoutEncoder &ndash;&gt;-->
+        <!--<encoder>-->
+            <!--<pattern>%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>-->
+        <!--</encoder>-->
+    <!--</appender>-->
 
 
     <!--<logger name="org.springframework" level="WARN"/>-->
@@ -21,6 +30,7 @@
 
     <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
+        <!--<appender-ref ref="aaa"/>-->
     </root>
 
 

@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 @ServletComponentScan("anthony.cd.app.pdc.common.filter")
 public class Main {
     public static void main(String[] args) {
-        System.out.println(System.getProperty("user.dir"));
         SpringApplication.run(Main.class, args);
     }
 }
