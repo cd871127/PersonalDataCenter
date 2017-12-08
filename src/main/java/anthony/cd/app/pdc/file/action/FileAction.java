@@ -4,6 +4,7 @@ import anthony.cd.app.pdc.common.util.SystemConst;
 import anthony.cd.app.pdc.common.util.hash.MD5;
 import anthony.cd.app.pdc.file.dto.FileDTO;
 import anthony.cd.app.pdc.file.mapper.FileMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +19,9 @@ public class FileAction {
 
     @Resource
     private FileMapper fileMapper;
+
+    @Value("${pdc.user-file-dir}")
+    private String fileDir;
 
     public List<FileDTO> uploadFile(List<MultipartFile> files, String userName) {
         List<FileDTO> successList = new ArrayList<>();
