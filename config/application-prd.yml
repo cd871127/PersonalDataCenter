@@ -13,3 +13,4 @@ spring:
 
 pdc:
   user-file-dir: D:/tmpfile
+  udp-port: 18889

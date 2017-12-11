@@ -67,6 +67,8 @@ public class AuthenticationFilter implements Filter {
             return true;
         if (uri.contains("/file"))
             return true;
+        if (uri.contains("/message"))
+            return true;
         return false;
     }
 

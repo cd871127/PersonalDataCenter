@@ -11,6 +11,11 @@ spring:
     host: 127.0.0.1
     port: 6379
 
+context:
+  listener:
+    classes: anthony.cd.app.pdc.ApplicationStartup
 
 pdc:
   user-file-dir: D:/tmpfile
+  udp-port: 18889
+
