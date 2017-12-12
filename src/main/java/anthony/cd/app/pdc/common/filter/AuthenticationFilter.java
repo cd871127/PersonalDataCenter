@@ -62,6 +62,8 @@ public class AuthenticationFilter implements Filter {
     }
 
     private boolean exclude(String method, String uri) {
+        if("OPTIONS".equals(method))
+            return true;
         if (("GET".equals(method) && uri.contains("/users/token")) || ("POST".equals(method) && uri.contains("/users/registry")) ||
                 ("GET".equals(method) && uri.contains("/security/rsaPublicKey")))
             return true;
@@ -76,4 +78,5 @@ public class AuthenticationFilter implements Filter {
     public void destroy() {
 
     }
+
 }
