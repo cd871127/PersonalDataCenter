@@ -26,7 +26,7 @@ public class UserController extends AbstractController {
 
     @RequestMapping(value = "token/{userName}", method = GET)
     @CrossOrigin(origins = "http://localhost:3000", methods = {GET})
-    ServerResponse login(@PathVariable String userName, @RequestHeader("password") String passWord, @RequestHeader("keyid") String keyId) {
+    ServerResponse login(@PathVariable String userName, @RequestHeader String passWord, @RequestHeader String keyId) {
 
         UserInfoDTO userInfoDTO = userAction.userLogin(userName, passWord, keyId);
         ServerResponse<UserInfoDTO> serverResponse = new ServerResponse<>();

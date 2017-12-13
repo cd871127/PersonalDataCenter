@@ -4,10 +4,7 @@ import anthony.cd.app.pdc.common.util.ServerResponse;
 import anthony.cd.app.pdc.common.util.SystemConst;
 import anthony.cd.app.pdc.file.action.FileAction;
 import anthony.cd.app.pdc.file.dto.FileDTO;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -22,9 +19,13 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import static anthony.cd.app.pdc.common.util.SystemConst.RequestResult.*;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 @RequestMapping("/file")
+@CrossOrigin(origins = "http://localhost:3000", methods = {GET,POST,DELETE})
 public class FileController {
     @Resource
     private FileAction fileAction;
@@ -64,7 +65,7 @@ public class FileController {
         }
     }
 
-    @RequestMapping(value = "{userName}", method = RequestMethod.POST)
+    @RequestMapping(value = "{userName}", method = POST)
     ServerResponse<List<FileDTO>> uploadFile(@PathVariable String userName, HttpServletRequest request) {
         List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
         if (files.isEmpty()) {
@@ -92,7 +93,7 @@ public class FileController {
 //        return null;
 //    }
 
-    @RequestMapping(value = "{userName}/{fileId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "{userName}/{fileId}", method = DELETE)
     ServerResponse deleteFile(@PathVariable String userName, @PathVariable String fileId) {
         if (fileAction.deleteFile(userName, fileId))
             return new ServerResponse(SUCCESS);
