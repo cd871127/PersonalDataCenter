@@ -4,14 +4,14 @@
 <mapper namespace="anthony.cd.app.pdc.file.mapper.FileMapper">
 
     <insert id="addFiles" parameterType="java.util.List">
-        INSERT INTO file_info_tbl(file_id, file_name, postfix, user_name, server_path) VALUES
+        INSERT INTO file_info_tbl(file_id, file_name,file_size, postfix, user_name, server_path) VALUES
         <foreach collection="list" index="index" item="fileDTO" separator=",">
-            (#{fileDTO.fileId},#{fileDTO.fileName},#{fileDTO.postfix},#{fileDTO.userName},#{fileDTO.serverPath})
+            (#{fileDTO.fileId},#{fileDTO.fileName},#{fileDTO.fileSize},#{fileDTO.postfix},#{fileDTO.userName},#{fileDTO.serverPath})
         </foreach>
     </insert>
 
     <select id="findFile" parameterType="java.util.Map" resultType="FileDTO">
-        SELECT file_id fileId,file_name fileName,postfix,user_name userName,server_path serverPath FROM file_info_tbl
+        SELECT file_id fileId,file_name fileName,file_size fileSize,postfix,user_name userName,server_path serverPath,created_date createdDate FROM file_info_tbl
         WHERE
         <trim prefixOverrides="and">
             <if test="fileId!=null">
@@ -28,7 +28,7 @@
     </select>
 
     <select id="findFileList" parameterType="java.util.Map" resultType="FileDTO">
-        SELECT file_id fileId,file_name fileName,postfix,user_name userName,server_path serverPath FROM file_info_tbl
+        SELECT file_id fileId,file_name fileName,file_size fileSize,postfix,user_name userName,server_path serverPath,created_date createdDate FROM file_info_tbl
         WHERE
         <trim prefixOverrides="and">
             <if test="fileId!=null">
