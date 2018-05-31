@@ -1,0 +1,42 @@
+spring:
+  profiles:
+    active: dev
+    include: common
+  application:
+    name: Seed
+  http:
+    encoding:
+      force: true
+      charset: utf-8 #http请求的字符编码
+      enabled: true
+      force-request: true
+      force-response: true
+  servlet:
+    multipart:
+      enabled: true
+      resolve-lazily: true
+      max-file-size: 16384MB
+      max-request-size: 16384MB
+  jpa:
+    database: oracle
+  datasource:
+      name: ss
+      url: jdbc:mysql://localhost:3306/pdc?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false
+      username: cdistc
+      password: cd123321
+#      url: jdbc:oracle:thin:@${oracle.database.url}:${oracle.database.port}:${oracle.database.sid}
+#      username: ${oracle.database.username}
+#      password: ${oracle.database.password}
+      driver-class-name: com.mysql.jdbc.Driver
+      type: com.zaxxer.hikari.HikariDataSource
+
+mybatis:
+  mapper-locations: classpath:sql-map/*.xml
+  type-aliases-package: io.github.cd871127.pdc.file.dto, io.github.cd871127.pdc.user.dto
+
+#io:
+#  github:
+#    cd871127:
+#      hodgepodge:
+#        quartz:
+#          enable: true
