@@ -99,4 +99,9 @@ public class FileAction {
         return file.exists() && file.isFile() && file.delete();
     }
 
+    public List<FileDTO> queryAllUserFiles(String userName) {
+        Map<String,String> paraMap=new HashMap<>();
+        paraMap.put("userName",userName);
+        return fileMapper.findFileList(paraMap);
+    }
 }

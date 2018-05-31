@@ -15,6 +15,6 @@ public interface FileMapper {
 
     List<FileDTO> findFileList(Map<String, String> paraMap);
 
-
     boolean deleteFile(Map<String, String> paraMap);
+
 }

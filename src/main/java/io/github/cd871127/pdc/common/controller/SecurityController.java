@@ -17,10 +17,9 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
-
 @RequestMapping("/security")
 public class SecurityController extends AbstractController {
 
@@ -37,13 +36,13 @@ public class SecurityController extends AbstractController {
     @RequestMapping(value = "rsaPublicKey", method = GET)
     @CrossOrigin(origins = "http://localhost:3000", methods = {GET})
     ServerResponse<Map<String, String>> initRSAPublicKey() {
-        ServerResponse<Map<String, String>> serverResponse=new ServerResponse<>();
+        ServerResponse<Map<String, String>> serverResponse = new ServerResponse<>();
         String keyId = UUID.randomUUID().toString();
         KeyPair keyPair = rsaEncrypt.getKeyPair();
         redisTemplate.opsForValue().set(keyId, keyPair, 5, TimeUnit.SECONDS);
         Map<String, String> resMap = new HashMap<>();
         resMap.put("keyId", keyId);
-        Base64 base64=new Base64();
+        Base64 base64 = new Base64();
         resMap.put("publicKey", base64.encodeToString(keyPair.getPublic().getEncoded()));
         serverResponse.setResult(SystemConst.RequestResult.SUCCESS);
         serverResponse.setData(resMap);
