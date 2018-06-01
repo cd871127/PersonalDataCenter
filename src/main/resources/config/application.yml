@@ -33,14 +33,25 @@ spring:
 
       driver-class-name: org.sqlite.JDBC
       type: com.zaxxer.hikari.HikariDataSource
+#  quartz:
+#    job-store-type: memory
+#    properties:
+#      org:
+#        quartz:
+#          scheduler:
+#            instanceName: test
+#            instanceId: AUTO
+
 
 mybatis:
   mapper-locations: classpath:sql-map/*.xml
   type-aliases-package: io.github.cd871127.pdc.file.dto, io.github.cd871127.pdc.user.dto
 
-#io:
-#  github:
-#    cd871127:
-#      hodgepodge:
-#        quartz:
-#          enable: true
+
+
+io:
+  github:
+    cd871127:
+      hodgepodge:
+        quartz:
+          enable: false

@@ -32,7 +32,7 @@ targetCompatibility = 1.8
 
 dependencies {
 
-    compile project(":hodgepodge-spring-boot-starter")
+//    compile project(":hodgepodge-spring-boot-starter")
 
     //spring
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
