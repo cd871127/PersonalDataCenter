@@ -5,6 +5,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply from: '../hodgepodge-spring-boot-starter/dependencies.gradle'
 
 buildscript {
     repositories {
@@ -55,6 +56,10 @@ dependencies {
     //sha1、base64
     compile group: 'commons-codec', name: 'commons-codec', version: '1.11'
 
+//    compile project(":hodgepodge-spring-boot-starter")
+
+    compile files('../hodgepodge-spring-boot-starter/build/libs/hodgepodge-spring-boot-starter-0.0.1.jar')
+
     //test
     testCompile group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion
     testCompile group: 'junit', name: 'junit', version: junitVersion
@@ -62,8 +67,22 @@ dependencies {
 
 }
 
+//compileJava dependensOn hodgepodge-spring-boot-starter.jar
 
 
-
-
-
+//task te() {
+////    Project p=getAllprojects().forEach({
+////        println it.name
+////        return it
+////    })
+//
+//    Iterator<Project> pIter = getAllprojects().toList().iterator()
+//    while (pIter.hasNext()) {
+//        Project project= pIter.next()
+//        if("hodgepodge-spring-boot-starter".equals(project.name))
+//        {
+//            Task t=project.task("jar")
+//            println t.name
+//        }
+//    }
+//}

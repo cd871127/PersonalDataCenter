@@ -53,5 +53,7 @@ io:
   github:
     cd871127:
       hodgepodge:
+        test:
+          enable: true
         quartz:
           enable: false

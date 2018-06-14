@@ -12,7 +12,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-@WebFilter(filterName = "authenticationFilter", urlPatterns = "/*")
+//@WebFilter(filterName = "authenticationFilter", urlPatterns = "/*")
 public class AuthenticationFilter implements Filter {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
