@@ -1,0 +1,27 @@
+hodgepodge:
+  swagger:
+    enable: false
+  log:
+    enable: false
+  quartz:
+    enable: true
+    default-global-group: default
+    #任务缓存类型,memory,redis,database,默认redis
+    taskCacheType: redis
+    redis:
+      cache-name: pdc
+    tasks:
+      - taskName: aaa
+#        taskGroup: bbb
+        triggerName: ccc
+        triggerGroup: bbb
+        cron: 0/5 * * * * ?
+        taskClassName: io.github.cd871127.pdc.TestJob
+        parameter: '{"aaa": "bbb","ccc": "ddd"}'
+#      - taskName: aaa222
+#        taskGroup: bbb222
+#        triggerName: ccc222
+#        triggerGroup: bbb222
+#        cron: 0/10 * * * * ?
+#        taskClassName: io.github.cd871127.pdc.TestJob
+

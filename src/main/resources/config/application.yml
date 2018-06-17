@@ -41,6 +41,37 @@ spring:
 #          scheduler:
 #            instanceName: test
 #            instanceId: AUTO
+#  quartz:
+#    job-store-type: jdbc
+#    properties:
+#      org:
+#        quartz:
+#          scheduler:
+#            instanceName: SeedClusteredScheduler
+#            instanceId: AUTO
+#          threadPool:
+#            class: org.quartz.simpl.SimpleThreadPool
+#            threadCount: 25
+#            threadPriority: 5
+#          jobStore:
+#            misfireThreshold: 60000
+#            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+#            driverDelegateClass: org.quartz.impl.jdbcjobstore.oracle.OracleDelegate
+#            useProperties: false
+#            dataSource: ${spring.datasource.name}
+#            tablePrefix: QRTZ_
+#            isClustered: true
+#            clusterCheckinInterval: 20000
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    jedis:
+      pool:
+        max-active: 8
+    #    max-wait: -1
+        max-idle: 8
+        min-idle: 0
 
 
 mybatis:
@@ -49,11 +80,11 @@ mybatis:
 
 
 
-io:
-  github:
-    cd871127:
-      hodgepodge:
-        test:
-          enable: true
-        quartz:
-          enable: false
+
+hodgepodge:
+  swagger:
+    enable: false
+#        test:
+#          enable: true
+#        quartz:
+#          enable: false

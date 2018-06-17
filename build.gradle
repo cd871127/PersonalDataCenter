@@ -39,8 +39,7 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     compile group: 'org.springframework.boot', name: 'spring-boot-devtools'
 
-    //redis
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-redis'
+
 
     //mybatis
     compile group: 'org.mybatis.spring.boot', name: 'mybatis-spring-boot-starter', version: myBatisVersion
