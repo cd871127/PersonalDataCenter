@@ -18,10 +18,10 @@ hodgepodge:
         cron: 0/5 * * * * ?
         taskClassName: io.github.cd871127.pdc.TestJob
         parameter: '{"aaa": "bbb","ccc": "ddd"}'
-#      - taskName: aaa222
-#        taskGroup: bbb222
-#        triggerName: ccc222
-#        triggerGroup: bbb222
-#        cron: 0/10 * * * * ?
-#        taskClassName: io.github.cd871127.pdc.TestJob
+      - taskName: aaa222
+        taskGroup: bbb222
+        triggerName: ccc222
+        triggerGroup: bbb222
+        cron: 0/10 * * * * ?
+        taskClassName: io.github.cd871127.pdc.TestJob
 
