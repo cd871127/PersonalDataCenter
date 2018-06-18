@@ -7,7 +7,7 @@ hodgepodge:
     enable: true
     default-global-group: default
     #任务缓存类型,memory,redis,database,默认redis
-    taskCacheType: redis
+    taskCacheType: memory
     redis:
       cache-name: pdc
     tasks:
